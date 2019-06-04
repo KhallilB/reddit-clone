@@ -11,9 +11,6 @@ const server = express();
 
 //---------------------------------------------------------
 // Middleware
-server.use(express.static('public'));
-server.engine('handlebars', exphbs({ defaultLayout: 'main' }));
-server.set('view engine', 'handlebars');
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
