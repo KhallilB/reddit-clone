@@ -13,6 +13,14 @@ const PostSchema = new Schema({
   description: {
     type: String,
     requried: [true, 'Post Description is Required']
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now()
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now()
   }
 });
 
