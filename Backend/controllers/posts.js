@@ -1,6 +1,6 @@
 const Post = require('../models/Post');
 
-//*** Creates a new post and saves it to database
+//*** Creates a new post and saves it to database (POST)
 //---------------------------------------------------------
 const newPost = async (req, res) => {
   try {
@@ -26,7 +26,7 @@ const newPost = async (req, res) => {
   }
 };
 
-//*** Returns all the reminders
+//*** Returns all the reminders (GET)
 //---------------------------------------------------------
 const allPosts = async (req, res) => {
   try {
@@ -41,7 +41,25 @@ const allPosts = async (req, res) => {
   }
 };
 
+//*** Returns a specific reminder (GET)
+//---------------------------------------------------------
+const getPost = async (req, res) => {
+  try {
+    // Find specific post
+    await Post.findById(req.params.id).then(post => {
+      // Check found post
+      console.log(`Found post: ${post}`);
+      // Send found post
+      res.json({ post }).status(200);
+    });
+  } catch (err) {
+    console.log('Error: ', err);
+    return res.send(err).status(500);
+  }
+};
+
 module.exports = {
   newPost,
-  allPosts
+  allPosts,
+  getPost
 };
