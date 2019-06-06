@@ -26,6 +26,22 @@ const newPost = async (req, res) => {
   }
 };
 
+//*** Returns all the reminders
+//---------------------------------------------------------
+const allPosts = async (req, res) => {
+  try {
+    // Find all Posts
+    await Post.find({}).then(posts => {
+      // Send all posts
+      res.json({ posts }).status(200);
+    });
+  } catch (err) {
+    console.log('Error: ', err);
+    return res.send(err).status(500);
+  }
+};
+
 module.exports = {
-  newPost
+  newPost,
+  allPosts
 };
