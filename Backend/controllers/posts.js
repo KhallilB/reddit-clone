@@ -19,7 +19,7 @@ const newPost = async (req, res) => {
 
     console.log(`Saved post: ${post}`);
 
-    return res.json({ reminder }).status(200);
+    return res.json({ post }).status(200);
   } catch (err) {
     console.log('Error: ', err);
     return res.send(err).status(500);
