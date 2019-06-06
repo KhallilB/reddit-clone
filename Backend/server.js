@@ -8,6 +8,7 @@ const cors = require('cors');
 const server = express();
 //---------------------------------------------------------
 // Routes
+const routesIndex = require('./routes/api/index');
 
 //---------------------------------------------------------
 // Middleware
@@ -16,6 +17,10 @@ server.use(express.urlencoded({ extended: true }));
 
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
+
+server.use(cors());
+
+server.use('/api', routesIndex);
 
 //---------------------------------------------------------
 // Database
