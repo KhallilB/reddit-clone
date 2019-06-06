@@ -4,4 +4,6 @@ const router = express.Router();
 const { newPost } = require('../../controllers/posts');
 
 // Create new post
-router.post('/posts/new');
+router.post('/posts', newPost);
+
+module.exports = router;
