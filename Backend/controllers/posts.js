@@ -26,7 +26,7 @@ const newPost = async (req, res) => {
   }
 };
 
-//*** Returns all the reminders (GET)
+//*** Returns all the posts (GET)
 //---------------------------------------------------------
 const allPosts = async (req, res) => {
   try {
@@ -41,7 +41,7 @@ const allPosts = async (req, res) => {
   }
 };
 
-//*** Returns a specific reminder (GET)
+//*** Returns a specific post (GET)
 //---------------------------------------------------------
 const getPost = async (req, res) => {
   try {
