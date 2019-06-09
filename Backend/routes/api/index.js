@@ -9,6 +9,11 @@ const {
   getSubvue
 } = require('../../controllers/posts');
 
+// Comment functions
+const { newComment } = require('../../controllers/comments');
+
+//*** Post Routes
+//---------------------------------------------------------
 // New Post
 router.post('/posts/new', newPost);
 // All Posts
@@ -25,5 +30,10 @@ router.get('/v/:subvue', getSubvue);
 // router.route('/posts/:id').get(getPost);
 
 // router.route('/v/:subvue').get(getSubvue)
+
+//*** Comment Routes
+//---------------------------------------------------------
+// New Comment
+router.post('/posts/:id/comments', newComment);
 
 module.exports = router;
