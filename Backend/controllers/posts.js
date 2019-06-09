@@ -11,6 +11,7 @@ const newPost = async (req, res) => {
     post.title = req.body.title;
     post.url = req.body.url;
     post.description = req.body.description;
+    post.subvue = req.body.subvue;
 
     console.log(`Post waiting to be saved: ${post}`);
 
@@ -58,8 +59,26 @@ const getPost = async (req, res) => {
   }
 };
 
+//*** Get all posts under a specific subvue (GET)
+//---------------------------------------------------------
+const getSubvue = async (req, res) => {
+  try {
+    // Find specific subvue
+    await Post.find({ subvue: req.params.subvue }).then(posts => {
+      // Check posts
+      console.log(`Found post: ${posts}`);
+      // Send all posts
+      res.json({ posts }).status(200);
+    });
+  } catch (err) {
+    console.log('Error: ', err);
+    return res.send(err).status(500);
+  }
+};
+
 module.exports = {
   newPost,
   allPosts,
-  getPost
+  getPost,
+  getSubvue
 };
