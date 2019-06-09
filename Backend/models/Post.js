@@ -14,6 +14,10 @@ const PostSchema = new Schema({
     type: String,
     requried: [true, 'Post Description is Required']
   },
+  subvue: {
+    type: String,
+    required: [true, 'Subvue is Required']
+  },
   createdAt: {
     type: Date,
     default: Date.now()
