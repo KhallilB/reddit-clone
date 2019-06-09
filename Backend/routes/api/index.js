@@ -18,4 +18,12 @@ router.get('/posts/:id', getPost);
 // Get Subvues
 router.get('/v/:subvue', getSubvue);
 
+// router.route('/posts/new').post(newPost);
+
+// router.route('/posts').get(allPosts);
+
+// router.route('/posts/:id').get(getPost);
+
+// router.route('/v/:subvue').get(getSubvue)
+
 module.exports = router;
