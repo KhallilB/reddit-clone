@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Post functions
+//---------------------------------------------------------
 const {
   newPost,
   allPosts,
@@ -11,7 +12,12 @@ const {
 } = require('../../controllers/posts');
 
 // Comment functions
+//---------------------------------------------------------
 const { newComment } = require('../../controllers/comments');
+
+// Auth functions
+//---------------------------------------------------------
+const { signUp } = require('../../controllers/auth');
 
 //*** Post Routes
 //---------------------------------------------------------
@@ -23,20 +29,17 @@ router.get('/posts', allPosts);
 router.get('/posts/:id', getPost);
 // Get Subvues
 router.get('/v/:subvue', getSubvue);
-
+// Create Comment
 router.post('/posts/:id/comments', createComment);
-
-// router.route('/posts/new').post(newPost);
-
-// router.route('/posts').get(allPosts);
-
-// router.route('/posts/:id').get(getPost);
-
-// router.route('/v/:subvue').get(getSubvue)
 
 //*** Comment Routes
 //---------------------------------------------------------
 // New Comment
 router.post('/posts/:id/comments', newComment);
+
+//*** Auth Routes
+//---------------------------------------------------------
+// Sign Up
+router.post('/users/new', signUp);
 
 module.exports = router;
