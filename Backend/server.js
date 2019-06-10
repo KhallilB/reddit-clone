@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const server = express();
 //---------------------------------------------------------
@@ -18,6 +19,8 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 
 server.use(cors());
+
+server.use(cookieParser);
 
 server.use('/api', routesIndex);
 
