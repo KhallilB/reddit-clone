@@ -30,4 +30,29 @@ const UserSchema = new Schema({
   }
 });
 
+UserSchema.pre('save', next => {
+  let user = this;
+
+  // Only hash password if it has been modified or new
+  if (!user.isModified('password')) return next();
+
+  // Generate salt
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) return next(err);
+
+    bcrypt.hash(this.password, salt, (err, hash) => {
+      if (err) return next(err);
+
+      // Override password with hashed one
+      user.password = hash;
+      user.saltSecret = salt;
+      next();
+    });
+  });
+});
+
+UserSchema.methods.validPassword = function(password) {
+  return bcrypt.compareSync(password, this.password);
+};
+
 module.exports = User = mongoose.model('UserSchema', UserSchema);
