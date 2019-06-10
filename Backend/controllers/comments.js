@@ -8,12 +8,8 @@ const newComment = async (req, res) => {
     // Set comment properties
     comment.content = req.body.content;
 
-    console.log('Comment waiting to be saved: ', comment);
-
     // Save comment
     await comment.save();
-
-    console.log('Saved comment: ', comment);
 
     // Send comment
     return res.json({ comment }).status(200);

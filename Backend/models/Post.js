@@ -18,6 +18,12 @@ const PostSchema = new Schema({
     type: String,
     required: [true, 'Subvue is Required']
   },
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Comment'
+    }
+  ],
   createdAt: {
     type: Date,
     default: Date.now()

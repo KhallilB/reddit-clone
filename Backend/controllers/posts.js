@@ -1,6 +1,7 @@
 const Post = require('../models/Post');
+const Comment = require('../models/Comment');
 
-//*** Creates a new post and saves it to database (POST)
+//*** Creates a new post (POST)
 //---------------------------------------------------------
 const newPost = async (req, res) => {
   try {
@@ -65,8 +66,6 @@ const getSubvue = async (req, res) => {
   try {
     // Find specific subvue
     await Post.find({ subvue: req.params.subvue }).then(posts => {
-      // Check posts
-      console.log(`Found post: ${posts}`);
       // Send all posts
       res.json({ posts }).status(200);
     });
@@ -76,9 +75,36 @@ const getSubvue = async (req, res) => {
   }
 };
 
+//*** Create a comment uner a post (POST)
+//---------------------------------------------------------
+const createComment = async (req, res) => {
+  try {
+    // Instantiate instance of model
+    const comment = new Comment(req.body);
+
+    // Save instance
+    await comment
+      .save()
+      .then(comment => {
+        console.log('1st then: ', comment);
+        return Post.findById(req.params.id);
+      })
+      .then(post => {
+        post.comments.unshift(comment);
+        console.log('2nd then: ', comment);
+        console.log('Post Save: ', post);
+        post.save();
+        res.json({ comment });
+      });
+  } catch (err) {
+    console.log('Error: ', err);
+    return res.send(err).status(500);
+  }
+};
 module.exports = {
   newPost,
   allPosts,
   getPost,
-  getSubvue
+  getSubvue,
+  createComment
 };

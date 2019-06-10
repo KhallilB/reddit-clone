@@ -6,7 +6,8 @@ const {
   newPost,
   allPosts,
   getPost,
-  getSubvue
+  getSubvue,
+  createComment
 } = require('../../controllers/posts');
 
 // Comment functions
@@ -22,6 +23,8 @@ router.get('/posts', allPosts);
 router.get('/posts/:id', getPost);
 // Get Subvues
 router.get('/v/:subvue', getSubvue);
+
+router.post('/posts/:id/comments', createComment);
 
 // router.route('/posts/new').post(newPost);
 
