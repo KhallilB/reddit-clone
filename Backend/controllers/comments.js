@@ -1,5 +1,7 @@
 const Comment = require('../models/Comment');
 
+//*** Create a comment uner a post (POST)
+//---------------------------------------------------------
 const newComment = async (req, res) => {
   try {
     // Define new comment object

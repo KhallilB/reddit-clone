@@ -75,7 +75,7 @@ const getSubvue = async (req, res) => {
   }
 };
 
-//*** Create a comment uner a post (POST)
+//*** Create instance of comment (POST)
 //---------------------------------------------------------
 const createComment = async (req, res) => {
   try {

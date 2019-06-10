@@ -11,6 +11,14 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now()
   },
+  username: {
+    type: String,
+    required = [true, 'Username is Required'],
+    match: [
+      /^[a-z0-9_-]{4,20}$/,
+      'Username must be 4-20 characters long, numbers are allowed, no special characters except _ & -'
+    ]
+  },
   email: {
     type: String,
     required: [true, 'Email Is Required'],
