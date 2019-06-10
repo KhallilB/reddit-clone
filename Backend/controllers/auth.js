@@ -23,7 +23,7 @@ const signUp = async (req, res) => {
         // Set payload
         const payload = { subject: user._id };
         // Sign token
-        const token = jwt.sign(payload, config.JWT_SECRET);
+        const token = jwt.sign(payload, config.JWT_SECRET, { expiresIn: '2h' });
 
         // Send token
         res.send({ token }).status(200);
