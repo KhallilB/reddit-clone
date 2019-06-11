@@ -5,6 +5,11 @@ const CommentSchema = new Schema({
   content: {
     type: String,
     required: [true, 'Content is required in comment']
+  },
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   }
 });
 
