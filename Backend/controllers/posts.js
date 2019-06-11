@@ -1,10 +1,19 @@
 const Post = require('../models/Post');
 const Comment = require('../models/Comment');
 
+const validatePost = require('../validation/posts');
+
 //*** Creates a new post (POST)
 //---------------------------------------------------------
 const newPost = async (req, res) => {
   try {
+    // Form validation
+    const { errors, isValid } = validatePost(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
     // Define new post object
     const post = await new Post();
 

@@ -4,10 +4,20 @@ const config = require('../config/config');
 
 const User = require('../models/User');
 
+const validateSignUp = require('../validation/signUp');
+const validateLogIn = require('../validation/logIn');
+
 //*** Function hadles user sign up; Saves user returns a cookie
 //---------------------------------------------------------
 const signUp = async (req, res) => {
   try {
+    // Form validation
+    const { errorrs, isValid } = validateSignUp(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errorrs);
+    }
+
     // Define new user object
     const user = await new User();
 
@@ -49,6 +59,13 @@ const signUp = async (req, res) => {
 //---------------------------------------------------------
 const logIn = async (req, res) => {
   try {
+    // Form validation
+    const { errors, isValid } = validateLogIn(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
     await passport.authenticate('local', (err, user, data) => {
       if (err) {
         console.log(err);
