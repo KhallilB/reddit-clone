@@ -1,7 +1,7 @@
 const Validator = require('validator');
 const isEmpty = require('is-empty');
 
-const validateSignup = user => {
+module.exports = function validateSignup(user) {
   let errors = {};
 
   // Convert fields to an empty string to use validator functions
@@ -57,8 +57,9 @@ const validateSignup = user => {
   if (!Validator.equals(user.password, user.passwordConfirm)) {
     errors.passwordConfirm = 'Passwords must match';
   }
-};
 
-module.exports = {
-  validateSignup
+  return {
+    errors,
+    isValid: isEmpty(errors)
+  };
 };

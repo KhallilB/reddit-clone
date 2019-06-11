@@ -12,10 +12,10 @@ const validateLogIn = require('../validation/logIn');
 const signUp = async (req, res) => {
   try {
     // Form validation
-    const { errorrs, isValid } = validateSignUp(req.body);
+    const { errors, isValid } = validateSignUp(req.body);
 
     if (!isValid) {
-      return res.status(400).json(errorrs);
+      return res.status(400).json(errors);
     }
 
     // Define new user object
