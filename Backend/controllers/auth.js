@@ -19,22 +19,18 @@ const signUp = async (req, res) => {
     console.log(`User waiting to be saved: ${user}`);
 
     // Save user
-    await user.save((err, user) => {
+    await user.save((user, err) => {
+      console.log('Saved  user: ', user);
       if (!err) {
         // Set payload
         const payload = { subject: user._id };
         // Sign token
         const token = jwt.sign(payload, config.JWT_SECRET, {
-          expiresIn: '60 days'
-        });
-        // Create Cookie
-        const cookie = cookie('nToken', token, {
-          maxAge: 900000,
-          httpOnly: true
+          expiresIn: '2h'
         });
 
         // Cookie
-        res.send({ cookie }).status(200);
+        res.send({ token }).status(200);
       }
     });
   } catch (err) {

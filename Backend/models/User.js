@@ -35,7 +35,7 @@ const UserSchema = new Schema({
     minlength: 8,
     match: [
       /^(?=.*\d).{8,24}$/,
-      'Password must be between 8 and 24 characters long and include at least one numeric character'
+      'Password must be between 8 and 24 characters long and include at least one number'
     ]
   }
 });
