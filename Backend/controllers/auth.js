@@ -24,9 +24,14 @@ const signUp = async (req, res) => {
         const payload = { subject: user._id };
         // Sign token
         const token = jwt.sign(payload, config.JWT_SECRET, { expiresIn: '2h' });
+        // Create Cookie
+        const cookie = cookie('nToken', token, {
+          maxAge: 900000,
+          httpOnly: true
+        });
 
-        // Send token
-        res.send({ token }).status(200);
+        // Send token & cookie
+        res.send({ token, cookie }).status(200);
       }
     });
   } catch (err) {
