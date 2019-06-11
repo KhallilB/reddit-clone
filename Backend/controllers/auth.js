@@ -75,6 +75,9 @@ const logIn = async (req, res) => {
   }
 };
 
+// TODO: Implement forgot function (resets users password ands send them a new one with mail gunner )
+// const forgotPass = async (req, res) => {}
+
 module.exports = {
   signUp,
   logIn
