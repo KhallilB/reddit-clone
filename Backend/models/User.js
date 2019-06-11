@@ -40,7 +40,7 @@ const UserSchema = new Schema({
   }
 });
 
-UserSchema.pre('save', next => {
+UserSchema.pre('save', function(next) {
   let user = this;
 
   // Only hash password if it has been modified or new
@@ -50,6 +50,7 @@ UserSchema.pre('save', next => {
   bcrypt.genSalt(10, (err, salt) => {
     if (err) return next(err);
 
+    // Hash the password
     bcrypt.hash(this.password, salt, (err, hash) => {
       if (err) return next(err);
 

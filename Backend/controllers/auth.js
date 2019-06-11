@@ -16,21 +16,27 @@ const signUp = async (req, res) => {
     user.email = req.body.email;
     user.password = req.body.password;
 
-    console.log(`User waiting to be saved: ${user}`);
-
     // Save user
-    await user.save((user, err) => {
+    await user.save((err, user) => {
       console.log('Saved  user: ', user);
+      console.log('Error: ', err);
       if (!err) {
         // Set payload
         const payload = { subject: user._id };
         // Sign token
         const token = jwt.sign(payload, config.JWT_SECRET, {
-          expiresIn: '2h'
+          expiresIn: '60 days'
         });
+        // TODO: Ask about this in class tomorrow
+        // const cookieToken = cookie('nToken', token, {
+        //   maxAge: 900000,
+        //   htppOnly: true
+        // });
 
-        // Cookie
+        // Send auth verifaction
         res.send({ token }).status(200);
+      } else {
+        res.send(err).status(500);
       }
     });
   } catch (err) {
@@ -43,32 +49,26 @@ const signUp = async (req, res) => {
 //---------------------------------------------------------
 const logIn = async (req, res) => {
   try {
-    // Use passport local strategy to authenticate user
     await passport.authenticate('local', (err, user, data) => {
       if (err) {
-        console.log('Error: ', err);
-        res.send(err).status(500);
+        console.log(err);
+        return res.status(500).json(err);
       }
 
-      // If we get the correct user
-      if (user) {
-        console.log('User logging in: ', user);
+      if (!user) {
+        res.send({ message: 'Error: User not found' }).status(404);
+      }
 
+      if (user) {
+        console.log('User: ', user);
         // Set payload
         const payload = { subject: user._id };
         // Sign token
-        const token = jwt.sign(payload, config.JWT_SECRET, {
-          expiresIn: '60 days'
-        });
-        // Create cookie
-        const cookie = cookie('nToken', token, {
-          maxAge: 900000,
-          httpOnly: true
-        });
-        // Send cookie
-        res.send({ cookeie }).status(200);
-      }
-    });
+        const token = jwt.sign(payload, config.JWT_SECRET);
+        // Send token
+        res.status(200).send({ token });
+      } else return res.status(200).json(data);
+    })(req, res);
   } catch (err) {
     console.log('Error: ', err);
     res.send(err).status(500);
