@@ -17,6 +17,8 @@ const validateSignup = user => {
   // Check email
   if (Validator.isEmpty(user.email)) {
     errors.email = 'Email is required';
+  } else if (!Validator.isEmail(user.email)) {
+    errors.email = 'Email must be valid';
   }
 
   // Check password
