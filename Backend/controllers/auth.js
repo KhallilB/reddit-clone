@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
 const config = require('../config/config');
 
 const User = require('../models/User');
 
-//*** Function hadles user sign up; Saves user returns a token
+//*** Function hadles user sign up; Saves user returns a cookie
 //---------------------------------------------------------
 const signUp = async (req, res) => {
   try {
@@ -23,15 +24,17 @@ const signUp = async (req, res) => {
         // Set payload
         const payload = { subject: user._id };
         // Sign token
-        const token = jwt.sign(payload, config.JWT_SECRET, { expiresIn: '2h' });
+        const token = jwt.sign(payload, config.JWT_SECRET, {
+          expiresIn: '60 days'
+        });
         // Create Cookie
         const cookie = cookie('nToken', token, {
           maxAge: 900000,
           httpOnly: true
         });
 
-        // Send token & cookie
-        res.send({ token, cookie }).status(200);
+        // Cookie
+        res.send({ cookie }).status(200);
       }
     });
   } catch (err) {
@@ -40,8 +43,36 @@ const signUp = async (req, res) => {
   }
 };
 
+// Authenticates auser using passport and returns cookie
+//---------------------------------------------------------
 const logIn = async (req, res) => {
   try {
+    // Use passport local strategy to authenticate user
+    await passport.authenticate('local', (err, user, data) => {
+      if (err) {
+        console.log('Error: ', err);
+        res.send(err).status(500);
+      }
+
+      // If we get the correct user
+      if (user) {
+        console.log('User logging in: ', user);
+
+        // Set payload
+        const payload = { subject: user._id };
+        // Sign token
+        const token = jwt.sign(payload, config.JWT_SECRET, {
+          expiresIn: '60 days'
+        });
+        // Create cookie
+        const cookie = cookie('nToken', token, {
+          maxAge: 900000,
+          httpOnly: true
+        });
+        // Send cookie
+        res.send({ cookeie }).status(200);
+      }
+    });
   } catch (err) {
     console.log('Error: ', err);
     res.send(err).status(500);
@@ -49,5 +80,6 @@ const logIn = async (req, res) => {
 };
 
 module.exports = {
-  signUp
+  signUp,
+  logIn
 };

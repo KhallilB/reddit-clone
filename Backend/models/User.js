@@ -13,7 +13,7 @@ const UserSchema = new Schema({
   },
   username: {
     type: String,
-    required = [true, 'Username is Required'],
+    required: [true, 'Username is Required'],
     match: [
       /^[a-z0-9_-]{4,20}$/,
       'Username must be 4-20 characters long, numbers are allowed, no special characters except _ & -'

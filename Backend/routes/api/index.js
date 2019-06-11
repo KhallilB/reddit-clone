@@ -17,7 +17,7 @@ const { newComment } = require('../../controllers/comments');
 
 // Auth functions
 //---------------------------------------------------------
-const { signUp } = require('../../controllers/auth');
+const { signUp, logIn } = require('../../controllers/auth');
 
 //*** Post Routes
 //---------------------------------------------------------
@@ -40,6 +40,8 @@ router.post('/posts/:id/comments', newComment);
 //*** Auth Routes
 //---------------------------------------------------------
 // Sign Up
-router.post('/users/new', signUp);
+router.post('/users/signup', signUp);
+// Log In
+router.post('/users/login', logIn);
 
 module.exports = router;
