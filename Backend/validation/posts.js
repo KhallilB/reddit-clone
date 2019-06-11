@@ -1,7 +1,7 @@
 const Validator = require('validator');
 const isEmpty = require('is-empty');
 
-function validatePost(post) {
+const validatePost = post => {
   let errors = {};
 
   // Convert fields to an empty string to use validator functions
@@ -31,7 +31,7 @@ function validatePost(post) {
   if (Validator.isEmpty(post.subvue)) {
     errors.subvue = ' Subvue is Required';
   }
-}
+};
 
 module.exports = {
   validatePost
