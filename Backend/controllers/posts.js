@@ -7,30 +7,34 @@ const validatePost = require('../validation/posts');
 //---------------------------------------------------------
 const newPost = async (req, res) => {
   try {
-    // Form validation
-    const { errors, isValid } = validatePost(req.body);
+    if (req.user) {
+      // Form validation
+      const { errors, isValid } = validatePost(req.body);
 
-    if (!isValid) {
-      return res.status(400).json(errors);
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+
+      // Define new post object
+      const post = await new Post();
+
+      // Set post model properties to form values
+      post.title = req.body.title;
+      post.url = req.body.url;
+      post.description = req.body.description;
+      post.subvue = req.body.subvue;
+
+      console.log(`Post waiting to be saved: ${post}`);
+
+      // Save post
+      await post.save();
+
+      console.log(`Saved post: ${post}`);
+
+      return res.json({ post }).status(200);
+    } else {
+      return res.send('You must log in to post').status(401);
     }
-
-    // Define new post object
-    const post = await new Post();
-
-    // Set post model properties to form values
-    post.title = req.body.title;
-    post.url = req.body.url;
-    post.description = req.body.description;
-    post.subvue = req.body.subvue;
-
-    console.log(`Post waiting to be saved: ${post}`);
-
-    // Save post
-    await post.save();
-
-    console.log(`Saved post: ${post}`);
-
-    return res.json({ post }).status(200);
   } catch (err) {
     console.log('Error: ', err);
     return res.send(err).status(500);

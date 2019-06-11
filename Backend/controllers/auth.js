@@ -38,12 +38,11 @@ const signUp = async (req, res) => {
           expiresIn: '60 days'
         });
         // TODO: Ask about this in class tomorrow
-        // const cookieToken = cookie('nToken', token, {
-        //   maxAge: 900000,
-        //   htppOnly: true
-        // });
+        // Send Cookie
+        // res
+        //   .cookie('nToken', token, { maxAge: 9999999, httpOnly: true })
+        //   .status(200);
 
-        // Send auth verifaction
         res.send({ token }).status(200);
       } else {
         res.send(err).status(500);
@@ -66,6 +65,7 @@ const logIn = async (req, res) => {
       return res.status(400).json(errors);
     }
 
+    // Call passport authentication
     await passport.authenticate('local', (err, user, data) => {
       if (err) {
         console.log(err);

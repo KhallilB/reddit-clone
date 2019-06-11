@@ -15,6 +15,8 @@ const routesIndex = require('./routes/api/index');
 
 //---------------------------------------------------------
 // Middleware
+// TODO: Add a function that checks authentication and use it as a middleware
+
 server.use(cookieParser());
 
 server.use(express.json());
