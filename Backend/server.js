@@ -5,6 +5,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
+const passport = require('passport');
+require('./config/passportConfig');
+
 const server = express();
 //---------------------------------------------------------
 // Routes
@@ -19,6 +22,15 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 
 server.use(cors());
+
+server.use(passport.initialize());
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
 
 server.use(cookieParser);
 
