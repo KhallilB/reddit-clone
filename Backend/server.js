@@ -15,6 +15,8 @@ const routesIndex = require('./routes/api/index');
 
 //---------------------------------------------------------
 // Middleware
+server.use(cookieParser());
+
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
@@ -31,8 +33,6 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((user, done) => {
   done(null, user);
 });
-
-server.use(cookieParser);
 
 server.use('/api', routesIndex);
 
