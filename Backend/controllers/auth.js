@@ -40,6 +40,14 @@ const signUp = async (req, res) => {
   }
 };
 
+const logIn = async (req, res) => {
+  try {
+  } catch (err) {
+    console.log('Error: ', err);
+    res.send(err).status(500);
+  }
+};
+
 module.exports = {
   signUp
 };
