@@ -23,7 +23,7 @@ const newPost = async (req, res) => {
     post.description = req.body.description;
     post.subvue = req.body.subvue;
 
-    console.log(`Post waiting to be saved: ${post}`);
+    console.log(req.body);
 
     // Save post
     await post.save();

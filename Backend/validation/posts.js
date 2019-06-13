@@ -8,7 +8,7 @@ module.exports = function validatePost(post) {
   post.title = !isEmpty(post.title) ? post.title : '';
   post.url = !isEmpty(post.url) ? post.url : '';
   post.description = !isEmpty(post.description) ? post.description : '';
-  post.subvue = !isEmpty(post.description) ? post.description : '';
+  post.subvue = !isEmpty(post.subvue) ? post.subvue : '';
 
   // Check Title
   if (Validator.isEmpty(post.title)) {

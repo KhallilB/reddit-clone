@@ -77,10 +77,11 @@ describe('Get a specific post', () => {
     const result = { status: 200, post: [] };
 
     PostMock.expects('find')
+      .once()
       .withArgs({ _id: 12345 })
       .yields(null, result);
 
-    Post.findById((err, result) => {
+    Post.find((err, result) => {
       PostMock.verify();
       PostMock.restore();
       expect(result.status).to.be.equal(200);
@@ -88,5 +89,3 @@ describe('Get a specific post', () => {
     });
   });
 });
-
-//

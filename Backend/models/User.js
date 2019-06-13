@@ -11,7 +11,13 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now()
   },
-  username: {
+  posts: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Post'
+    }
+  ],
+  name: {
     type: String,
     required: [true, 'Username is Required'],
     unique: [true, 'Username already exists'],

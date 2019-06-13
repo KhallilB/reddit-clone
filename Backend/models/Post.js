@@ -18,17 +18,10 @@ const PostSchema = new Schema({
     type: String,
     required: [true, 'Subvue is Required']
   },
-  // author: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'User',
-  //   required: true
-  // },
-  posts: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Post'
-    }
-  ],
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
   comments: [
     {
       type: Schema.Types.ObjectId,

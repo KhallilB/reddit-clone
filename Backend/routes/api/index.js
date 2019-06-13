@@ -24,7 +24,7 @@ const { signUp, logIn } = require('../../controllers/auth');
 //*** Post Routes
 //---------------------------------------------------------
 // New Post
-router.post('/posts/new', checkAuth, newPost);
+router.post('/posts/new', newPost);
 // All Posts
 router.get('/posts', allPosts);
 // Get Post
