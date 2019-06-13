@@ -1,5 +1,6 @@
 const Post = require('../models/Post');
 const Comment = require('../models/Comment');
+const User = require('../models/User');
 
 const validatePost = require('../validation/posts');
 
@@ -16,6 +17,8 @@ const newPost = async (req, res) => {
 
     // Define new post object
     const post = await new Post();
+    console.log('User That is Req.user', req.user);
+    post.author = req.user.subject;
 
     // Set post model properties to form values
     post.title = req.body.title;
@@ -23,14 +26,23 @@ const newPost = async (req, res) => {
     post.description = req.body.description;
     post.subvue = req.body.subvue;
 
-    console.log(req.body);
-
     // Save post
-    await post.save();
-
-    console.log(`Saved post: ${post}`);
-
-    return res.json({ post }).status(200);
+    await post
+      .save()
+      .then(post => {
+        return User.findById(req.user.subject);
+      })
+      .then(user => {
+        user.posts.unshift(post);
+        user.save();
+        res.json({ post }).status(200);
+      })
+      .catch(err => {
+        console.log('Error, ', err);
+      })
+      .catch(err => {
+        console.log('Error: ', err);
+      });
   } catch (err) {
     console.log('Error: ', err);
     return res.send(err).status(500);
@@ -89,21 +101,24 @@ const getSubvue = async (req, res) => {
 const createComment = async (req, res) => {
   try {
     // Instantiate instance of model
-    const comment = new Comment(req.body);
+    const comment = await new Comment(req.body);
 
     // Save instance
     await comment
       .save()
       .then(comment => {
-        console.log('1st then: ', comment);
         return Post.findById(req.params.id);
       })
       .then(post => {
         post.comments.unshift(comment);
-        console.log('2nd then: ', comment);
-        console.log('Post Save: ', post);
         post.save();
-        res.json({ comment });
+        res.json({ comment }).status(200);
+      })
+      .catch(err => {
+        console.log('Error', err);
+      })
+      .catch(err => {
+        console.log('Error, ', err);
       });
   } catch (err) {
     console.log('Error: ', err);

@@ -9,12 +9,11 @@ module.exports = (req, res, next) => {
       req.cookies.mistaCookie === 'null'
     ) {
       req.user = null;
-      res.send({ message: 'Authentication failed' });
+      res.send({ message: 'Authentication failed' }).status(401);
     } else {
       let token = req.cookies.mistaCookie;
-      console.log(token);
       let decodedToken = jwt.decode(token, { complete: true }) || {};
-      req.userData = decodedToken.payload;
+      req.user = decodedToken.payload;
       console.log('User authenticated succesfully');
     }
     next();
