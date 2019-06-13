@@ -4,18 +4,18 @@ const isEmpty = require('is-empty');
 
 module.exports = (req, res, next) => {
   try {
-    console.log('Checking Authentication');
     if (
       typeof req.cookies.mistaCookie === 'undefined' ||
       req.cookies.mistaCookie === 'null'
     ) {
       req.user = null;
-      console.log('Authentication failed');
+      res.send({ message: 'Authentication failed' });
     } else {
       let token = req.cookies.mistaCookie;
+      console.log(token);
       let decodedToken = jwt.decode(token, { complete: true }) || {};
       req.userData = decodedToken.payload;
-      console.log('user authenticated succesfully');
+      console.log('User authenticated succesfully');
     }
     next();
   } catch (err) {

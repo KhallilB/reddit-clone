@@ -24,7 +24,7 @@ const { signUp, logIn } = require('../../controllers/auth');
 //*** Post Routes
 //---------------------------------------------------------
 // New Post
-router.post('/posts/new', newPost);
+router.post('/posts/new', checkAuth, newPost);
 // All Posts
 router.get('/posts', allPosts);
 // Get Post
@@ -32,12 +32,12 @@ router.get('/posts/:id', getPost);
 // Get Subvues
 router.get('/v/:subvue', getSubvue);
 // Create Comment
-router.post('/posts/:id/comments', createComment);
+router.post('/posts/:id/comments', checkAuth, createComment);
 
 //*** Comment Routes
 //---------------------------------------------------------
 // New Comment
-router.post('/posts/:id/comments', newComment);
+router.post('/posts/:id/comments', checkAuth, newComment);
 
 //*** Auth Routes
 //---------------------------------------------------------
