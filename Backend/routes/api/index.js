@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const checkAuth = require('../../middleware/checkAuth');
+
 // Post functions
 //---------------------------------------------------------
 const {
@@ -22,7 +24,7 @@ const { signUp, logIn } = require('../../controllers/auth');
 //*** Post Routes
 //---------------------------------------------------------
 // New Post
-router.post('/posts/new', newPost);
+router.post('/posts/new', checkAuth, newPost);
 // All Posts
 router.get('/posts', allPosts);
 // Get Post
