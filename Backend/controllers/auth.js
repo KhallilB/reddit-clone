@@ -37,13 +37,11 @@ const signUp = async (req, res) => {
         const token = jwt.sign(payload, config.JWT_SECRET, {
           expiresIn: '60 days'
         });
-        // TODO: Ask about this in class tomorrow
-        // Send Cookie
-        // res
-        //   .cookie('nToken', token, { maxAge: 9999999, httpOnly: true })
-        //   .status(200);
-
-        res.send({ token }).status(200);
+        // Send token in cookie
+        res
+          .cookie('mistaCookie', token, { maxAge: 9999999, httpOnly: true })
+          .status(200)
+          .send({ message: 'Cookie has been sent to client ' });
       } else {
         res.send(err).status(500);
       }
@@ -82,8 +80,11 @@ const logIn = async (req, res) => {
         const payload = { subject: user._id };
         // Sign token
         const token = jwt.sign(payload, config.JWT_SECRET);
-        // Send token
-        res.status(200).send({ token });
+        // Send token in cookie
+        res
+          .cookie('mistaCookie', token, { maxAge: 999999, httpOnly: true })
+          .status(200)
+          .send({ message: 'Cookie has been sent to the client' });
       } else return res.status(200).json(data);
     })(req, res);
   } catch (err) {
