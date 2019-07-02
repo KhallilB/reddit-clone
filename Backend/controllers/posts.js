@@ -17,20 +17,19 @@ const newPost = async (req, res) => {
 
     // Define new post object
     const post = await new Post();
-    console.log('User That is Req.user', req.user);
-    post.author = req.user.subject;
 
     // Set post model properties to form values
     post.title = req.body.title;
     post.url = req.body.url;
     post.description = req.body.description;
     post.subvue = req.body.subvue;
+    post.author = req.user._id;
 
     // Save post
     await post
       .save()
       .then(post => {
-        return User.findById(req.user.subject);
+        return User.findById(req.user._id);
       })
       .then(user => {
         user.posts.unshift(post);
@@ -38,10 +37,7 @@ const newPost = async (req, res) => {
         res.json({ post }).status(200);
       })
       .catch(err => {
-        console.log('Error, ', err);
-      })
-      .catch(err => {
-        console.log('Error: ', err);
+        console.log(err.message);
       });
   } catch (err) {
     console.log('Error: ', err);
@@ -81,6 +77,23 @@ const getPost = async (req, res) => {
   }
 };
 
+//*** Gets all the posts under specific user (GET)
+//---------------------------------------------------------
+const userPosts = async (req, res) => {
+  try {
+    await User.find({ username: req.params.username })
+      .then(user => {
+        console.log(user);
+        res.json({ user }).status(200);
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
+  } catch (err) {
+    console.log;
+  }
+};
+
 //*** Get all posts under a specific subvue (GET)
 //---------------------------------------------------------
 const getSubvue = async (req, res) => {
@@ -115,13 +128,13 @@ const createComment = async (req, res) => {
         res.json({ comment }).status(200);
       })
       .catch(err => {
-        console.log('Error', err);
+        console.log(err.message);
       })
       .catch(err => {
-        console.log('Error, ', err);
+        console.log(err.message);
       });
   } catch (err) {
-    console.log('Error: ', err);
+    console.log(err.message);
     return res.send(err).status(500);
   }
 };
@@ -129,6 +142,7 @@ module.exports = {
   newPost,
   allPosts,
   getPost,
+  userPosts,
   getSubvue,
   createComment
 };

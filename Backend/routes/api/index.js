@@ -9,6 +9,7 @@ const {
   newPost,
   allPosts,
   getPost,
+  userPosts,
   getSubvue,
   createComment
 } = require('../../controllers/posts');
@@ -29,6 +30,8 @@ router.post('/posts/new', checkAuth, newPost);
 router.get('/posts', allPosts);
 // Get Post
 router.get('/posts/:id', getPost);
+// Get User Posts
+router.get('/:username/posts', userPosts);
 // Get Subvues
 router.get('/v/:subvue', getSubvue);
 // Create Comment

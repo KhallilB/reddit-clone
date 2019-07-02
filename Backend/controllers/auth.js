@@ -32,7 +32,7 @@ const signUp = async (req, res) => {
       console.log('Error: ', err);
       if (!err) {
         // Set payload
-        const payload = { subject: user._id };
+        const payload = { _id: user._id };
         // Sign token
         const token = jwt.sign(payload, config.JWT_SECRET, {
           expiresIn: '60 days'
@@ -77,7 +77,7 @@ const logIn = async (req, res) => {
       if (user) {
         console.log('User: ', user);
         // Set payload
-        const payload = { subject: user._id };
+        const payload = { _id: user._id };
         // Sign token
         const token = jwt.sign(payload, config.JWT_SECRET);
         // Send token in cookie

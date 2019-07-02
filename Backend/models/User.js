@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   },
   updatedAt: {
     type: Date,
-    default: Date.now()
+    default: Date.now
   },
   posts: [
     {
@@ -19,8 +19,8 @@ const UserSchema = new Schema({
   ],
   name: {
     type: String,
-    required: [true, 'Username is Required'],
-    unique: [true, 'Username already exists'],
+    required: true,
+    unique: true,
     match: [
       /^[a-z0-9_-]{4,20}$/,
       'Username must be 4-20 characters long, numbers are allowed, no special characters except _ & -'
@@ -28,8 +28,8 @@ const UserSchema = new Schema({
   },
   email: {
     type: String,
-    required: [true, 'Email Is Required'],
-    unique: [true, 'Email already exists'],
+    required: true,
+    unique: true,
     match: [
       /^[a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
       'Enter a vaild email'
@@ -37,7 +37,7 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
-    required: [true, 'Password is Required'],
+    required: true,
     minlength: 8,
     match: [
       /^(?=.*\d).{8,24}$/,

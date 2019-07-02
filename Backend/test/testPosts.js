@@ -13,9 +13,9 @@ chai.use(chaiHttp);
 const Post = require('../models/Post');
 
 // Empty database before each test
-describe('Books', () => {
+describe('Post', () => {
   beforeEach(done => {
-    Book.remove({}, err => {
+    Post.remove({}, err => {
       done();
     });
   });
